@@ -17,7 +17,11 @@ namespace kotor_Randomizer_2
         {
             using (BinaryReader br = new BinaryReader(s))
             {
-                if (new string(br.ReadChars(VERSION.Length)) == VERSION)    // Version Check
+                string versionText = new string(br.ReadChars(VERSION.Length));
+                //string[] versionSplit = versionText.Split("V".ToArray());
+                //Version saveVersion = new Version(versionSplit[1]);
+
+                if (versionText == VERSION)    // Version Check
                 {
                     // Category Booleans
                     Properties.Settings.Default.DoRandomization_Module = br.ReadBoolean();
@@ -83,6 +87,7 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockGalaxyMap; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixCoordinates; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixMindPrison; }
+                        if (br.PeekChar() != 'I' && br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockDoors; }
 
                         Properties.Settings.Default.LastPresetComboIndex = -2;
                         Properties.Settings.Default.ModulePresetSelected = false;
@@ -328,6 +333,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap));  // Unlocked Galaxy Map
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates));   // Fixed Module Coordinates
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison));    // Fixed Rakatan Riddles
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDoors));      // Unlock Problem Doors
                 }
                 // Items
                 if (Properties.Settings.Default.DoRandomization_Item)

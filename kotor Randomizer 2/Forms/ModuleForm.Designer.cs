@@ -41,6 +41,7 @@
             this.cbUnlockGalaxyMap = new System.Windows.Forms.CheckBox();
             this.cbFixCoordinates = new System.Windows.Forms.CheckBox();
             this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
+            this.cbUnlockDoors = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -206,12 +207,25 @@
             this.cbFixMindPrison.UseVisualStyleBackColor = true;
             this.cbFixMindPrison.CheckedChanged += new System.EventHandler(this.cbFixMindPrison_CheckedChanged);
             // 
+            // cbUnlockDoors
+            // 
+            this.cbUnlockDoors.AutoSize = true;
+            this.cbUnlockDoors.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockDoors.Location = new System.Drawing.Point(180, 530);
+            this.cbUnlockDoors.Name = "cbUnlockDoors";
+            this.cbUnlockDoors.Size = new System.Drawing.Size(132, 17);
+            this.cbUnlockDoors.TabIndex = 29;
+            this.cbUnlockDoors.Text = "Unlock Problem Doors";
+            this.cbUnlockDoors.UseVisualStyleBackColor = true;
+            this.cbUnlockDoors.CheckedChanged += new System.EventHandler(this.cbUnlockDoors_CheckedChanged);
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(541, 572);
+            this.Controls.Add(this.cbUnlockDoors);
             this.Controls.Add(this.cbFixMindPrison);
             this.Controls.Add(this.cbFixCoordinates);
             this.Controls.Add(this.cbUnlockGalaxyMap);
@@ -252,5 +266,6 @@
         private System.Windows.Forms.CheckBox cbUnlockGalaxyMap;
         private System.Windows.Forms.CheckBox cbFixCoordinates;
         private System.Windows.Forms.CheckBox cbFixMindPrison;
+        private System.Windows.Forms.CheckBox cbUnlockDoors;
     }
 }

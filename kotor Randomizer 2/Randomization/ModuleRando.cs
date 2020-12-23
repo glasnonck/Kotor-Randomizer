@@ -9,8 +9,12 @@ namespace kotor_Randomizer_2
 {
     public static class ModuleRando
     {
+        private const string AREA_DAN_COURTYARD = "danm14aa";
         private const string AREA_MYSTERY_BOX = "ebo_m46ab";
+        private const string AREA_TEMPLE_SUMMIT = "unk_m44ac";
+        private const string LABEL_DAN_RUIN_DOOR = "man14aa_door04";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
+        private const string LABEL_TEMPLE_DOOR = "unk44_tpllckdoor";
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
@@ -154,38 +158,57 @@ namespace kotor_Randomizer_2
             // Fixed Rakata riddle Man in Mind Prison.
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
             {
-                // Find the files associated with AREA_MYSTERY_BOX.
-                var files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_MYSTERY_BOX]));
-                foreach (FileInfo fi in files)
+                UpdateFileInRIM(paths, LookupTable, AREA_MYSTERY_BOX, LABEL_MIND_PRISON, Properties.Resources.g_brakatan003, 192);
+            }
+
+            // Unlock plot locked doors that can cause issues during randomization, and the Leviathan Hanger elevator.
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDoors))
+            {
+                UpdateFileInRIM(paths, LookupTable, AREA_DAN_COURTYARD, LABEL_DAN_RUIN_DOOR, Properties.Resources.man14aa_door04, 184);
+                UpdateFileInRIM(paths, LookupTable, AREA_TEMPLE_SUMMIT, LABEL_TEMPLE_DOOR, Properties.Resources.unk44_tpllckdoor, 183);
+            }
+        }
+
+        private static void UpdateFileInRIM(KPaths paths, Dictionary<string, string> LookupTable, string Module, string Label, byte[] NewData, int DataOffset)
+        {
+            // Find the files associated with this Module.
+            var files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[Module]));
+            foreach (FileInfo fi in files)
+            {
+                // Skip any files that don't end in "s.rim".
+                if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                // Check the RIM's File_Table for any rFiles labeled with the given Label.
+                RIM r = new RIM(fi.FullName);
+                if (r.File_Table.Where(x => x.Label == Label).Any())
                 {
-                    // Skip any files that don't end in "s.rim".
-                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
-
-                    // Check the RIM's File_Table for any rFiles labeled with LABEL_MIND_PRISON.
-                    RIM r = new RIM(fi.FullName);
-                    if (r.File_Table.Where(x => x.Label == LABEL_MIND_PRISON).Any())
+                    bool offadjust = false;
+                    foreach (RIM.rFile rf in r.File_Table)
                     {
-                        bool offadjust = false;
-                        foreach (RIM.rFile rf in r.File_Table)
+                        // For the rFile with this Label, update the file data with the fix.
+                        if (rf.Label == Label)
                         {
-                            // For the rFile with LABEL_MIND_PRISON, update the file data with the fix.
-                            if (rf.Label == LABEL_MIND_PRISON)
-                            {
-                                rf.File_Data = Properties.Resources.g_brakatan003;
-                                rf.DataSize += 192;
-                                offadjust = true;
-                                continue;
-                            }
-                            // For rFiles after LABEL_MIND_PRISON, add the additional data offset.
-                            if (offadjust)
-                            {
-                                rf.DataOffset += 192;
-                            }
-                        }
+                            Console.WriteLine($"{Module} - {Label}");
+                            Console.WriteLine($"File_Data.Length = {rf.File_Data.Length}");
+                            Console.WriteLine($"NewData.Length   = {NewData.Length}");
+                            Console.WriteLine($"Length Diff      = {NewData.Length - rf.File_Data.Length}");
+                            Console.WriteLine($"DataOffset       = {DataOffset}");
+                            Console.WriteLine();
 
-                        // Write updated RIM data to file.
-                        r.WriteToFile(fi.FullName);
+                            rf.File_Data = NewData;
+                            rf.DataSize += DataOffset;
+                            offadjust = true;
+                            continue;
+                        }
+                        // For rFiles after this Label, add the additional data offset.
+                        if (offadjust)
+                        {
+                            rf.DataOffset += DataOffset;
+                        }
                     }
+
+                    // Write updated RIM data to file.
+                    r.WriteToFile(fi.FullName);
                 }
             }
         }

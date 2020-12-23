@@ -251,16 +251,20 @@
     <None Include="Resources\g_brakatan003.utc" />
     <None Include="Resources\k_pebn_galaxy.ncs" />
     <None Include="Resources\k_ren_visionland.ncs" />
+    <None Include="Resources\man14aa_door04.utd" />
     <None Include="Resources\MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_modulesave.2da" />
+    <None Include="Resources\unk44_tpllckdoor.utd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Xml\KotorModules.xml" />
+    <Content Include="Xml\KotorModules.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Notes\KRPformat.txt" />
     <None Include="Resources\help\GeneralHelp.txt" />
     <None Include="Resources\help\ModuleHelp.txt" />

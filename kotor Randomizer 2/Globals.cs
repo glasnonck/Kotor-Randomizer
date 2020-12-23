@@ -63,6 +63,8 @@ namespace kotor_Randomizer_2
         FixCoordinates  = 0x20, // 0b00100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
         FixMindPrison   = 0x40, // 0b01000000
+        /// <summary> Unlock certain doors and the Hanger elevator to improve usability. </summary>
+        UnlockDoors     = 0x80, // 0b10000000
     }
 
     public class Globals

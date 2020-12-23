@@ -319,4 +319,10 @@
   <data name="MsgPresetLoaded" xml:space="preserve">
     <value>Preset Loaded</value>
   </data>
+  <data name="man14aa_door04" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\man14aa_door04.utd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="unk44_tpllckdoor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unk44_tpllckdoor.utd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

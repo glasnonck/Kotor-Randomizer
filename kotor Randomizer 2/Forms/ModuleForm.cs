@@ -46,6 +46,7 @@ namespace kotor_Randomizer_2
             cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
             cbFixCoordinates.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
             cbFixMindPrison.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+            cbUnlockDoors.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDoors);
 
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             Constructed = true;
@@ -250,6 +251,12 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
+        private void cbUnlockDoors_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockDoors;
+        }
+
         private void ModuleForm_Activated(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LastPresetComboIndex == -2)
@@ -268,6 +275,7 @@ namespace kotor_Randomizer_2
                 cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbFixMindPrison.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                cbUnlockDoors.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDoors);
                 Constructed = true;
             }
         }
