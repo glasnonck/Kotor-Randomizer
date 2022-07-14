@@ -16,6 +16,7 @@ namespace kotor_Randomizer_2
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
             if (args.Length == 0)
             {
